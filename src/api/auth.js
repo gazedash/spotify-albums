@@ -4,11 +4,14 @@ import { parse } from "qs";
 import _ from "lodash";
 
 let REDIRECT_URI = window.location.origin;
+const scopes = `&scope=${encodeURIComponent(
+  "playlist-modify-public playlist-modify-private"
+)}`;
 
 function getLoginURL() {
   return `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
     REDIRECT_URI
-  )}&response_type=token`;
+  )}&response_type=token${scopes}`;
 }
 
 export function windowClosedPromise(win: window): Promise<boolean> {

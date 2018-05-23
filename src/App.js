@@ -38,7 +38,7 @@ class App extends Component {
     const { albums, isLoggedIn } = this.state;
 
     if (!isLoggedIn) {
-      return <WelcomeScreen onLogin={this.login``} />;
+      return <WelcomeScreen onLogin={this.login} />;
     }
 
     return (

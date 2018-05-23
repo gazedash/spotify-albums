@@ -2,10 +2,15 @@ import React from "react";
 import _ from "lodash";
 
 const sortTypes = ["new", "old", "popular"];
+const includeTitles = {
+  // live: "live",
+  compilation: "compilations",
+  appears_on: "appears on"
+};
 const includeTypes = {
-  live: false,
-  compilations: false,
-  appearsOn: false
+  // live: false,
+  compilation: false,
+  appears_on: false
 };
 
 export class Form extends React.Component {
@@ -19,39 +24,22 @@ export class Form extends React.Component {
   };
 
   handleSubmit = () => {
-    this.props.onSubmit(this.state.form);
+    const { form } = this.state;
+    this.props.onSubmit({
+      ...form,
+      playlistName: form.playlistName
+        ? form.playlistName
+        : form.artist + " Albums"
+    });
   };
 
   handleChange = field => ({ currentTarget }) => {
-    if (field === "artist") {
-      if (
-        !this.state.form.playlistName ||
-        this.state.form.playlistName === this.state.form.artist
-      ) {
-        this.setState(oldState => ({
-          form: {
-            ...oldState.form,
-            playlistName: currentTarget.value + " Albums"
-          }
-        }));
-      }
-    }
-
     this.setState(oldState => ({
       form: {
         ...oldState.form,
         [field]: currentTarget.value
       }
     }));
-
-    if (field === "playlistName" && !currentTarget.value) {
-      this.setState(oldState => ({
-        form: {
-          ...oldState.form,
-          playlistName: this.state.form.artist + " Albums"
-        }
-      }));
-    }
   };
 
   handleIncludeCheck = key => ({ currentTarget }) => {
@@ -67,7 +55,7 @@ export class Form extends React.Component {
   };
 
   render() {
-    const { includes, sort, artist, playlistName } = this.state.form;
+    const { includes, sort, artist } = this.state.form;
     return (
       <div>
         <div>Spotify</div>
@@ -98,7 +86,7 @@ export class Form extends React.Component {
               value={includes[type]}
               onChange={this.handleIncludeCheck(type)}
             />
-            <label>{type}</label>
+            <label>{includeTitles[type]}</label>
           </div>
         ))}
 
