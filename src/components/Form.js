@@ -23,17 +23,14 @@ export class Form extends React.Component {
 
   handleChange = field => ({ currentTarget }) => {
     if (field === "artist") {
-      const playlistNameParts = this.state.form.playlistName.split(" Albums")
-      console.log(playlistNameParts)
       if (
         !this.state.form.playlistName ||
-        (playlistNameParts[0] ===
-          this.state.form.artist && !playlistNameParts[1])
+        this.state.form.playlistName === this.state.form.artist
       ) {
         this.setState(oldState => ({
           form: {
             ...oldState.form,
-            playlistName: currentTarget.value + " Albums"
+            playlistName: currentTarget.value
           }
         }));
       }
@@ -103,8 +100,11 @@ export class Form extends React.Component {
         ))}
 
         <input
-          placeholder={this.state.form.playlistName ? this.state.form.playlistName + " Albums" : "Playlist name"}
-          value={this.state.form.playlistName}
+          placeholder={
+            this.state.form.artist
+              ? this.state.form.artist + " Albums"
+              : "Playlist name"
+          }
           onChange={this.handleChange("playlistName")}
         />
 
