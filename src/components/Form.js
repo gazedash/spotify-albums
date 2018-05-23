@@ -13,7 +13,8 @@ export class Form extends React.Component {
     form: {
       includes: includeTypes,
       playlistName: "",
-      artist: ""
+      artist: "",
+      sort: "new"
     }
   };
 
@@ -30,15 +31,7 @@ export class Form extends React.Component {
         this.setState(oldState => ({
           form: {
             ...oldState.form,
-            playlistName: currentTarget.value
-          }
-        }));
-      }
-      if (currentTarget.value === "") {
-        this.setState(oldState => ({
-          form: {
-            ...oldState.form,
-            playlistName: ""
+            playlistName: currentTarget.value + " Albums"
           }
         }));
       }
@@ -50,6 +43,15 @@ export class Form extends React.Component {
         [field]: currentTarget.value
       }
     }));
+
+    if (field === "playlistName" && !currentTarget.value) {
+      this.setState(oldState => ({
+        form: {
+          ...oldState.form,
+          playlistName: this.state.form.artist + " Albums"
+        }
+      }));
+    }
   };
 
   handleIncludeCheck = key => ({ currentTarget }) => {
@@ -65,7 +67,7 @@ export class Form extends React.Component {
   };
 
   render() {
-    const { includes } = this.state.form;
+    const { includes, sort, artist, playlistName } = this.state.form;
     return (
       <div>
         <div>Spotify</div>
@@ -80,6 +82,7 @@ export class Form extends React.Component {
               name="sort"
               type="radio"
               value={type}
+              checked={type === sort}
               onChange={this.handleChange("sort")}
             />
             <label>{type}</label>
@@ -100,11 +103,7 @@ export class Form extends React.Component {
         ))}
 
         <input
-          placeholder={
-            this.state.form.artist
-              ? this.state.form.artist + " Albums"
-              : "Playlist name"
-          }
+          placeholder={artist ? artist + " Albums" : "Playlist name"}
           onChange={this.handleChange("playlistName")}
         />
 

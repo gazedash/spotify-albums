@@ -92,6 +92,6 @@ export const fetchSongs = async (artist?: string, args?: {}): Object => {
   return [];
 };
 
-export const createPlaylist = form => {
+export const createPlaylist = async form => {
   console.log(form);
 };
