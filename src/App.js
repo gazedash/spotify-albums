@@ -5,50 +5,37 @@ import Form from "./components/Form";
 import Albums from "./components/Albums";
 import * as api from "./api";
 import auth from "./api/auth";
+import { withState, withProps, lifecycle, compose } from 'recompose';
 
-class App extends Component {
-  state = {
-    albums: [],
-    isLoggedIn: false
-  };
-  createPlaylist = async form => {
-    const albums = await api.createPlaylist(form);
-    this.setState({
-      albums
-    });
-  };
-
-  componentDidMount() {
-    auth.redirected();
-    this._componentDidMount();
-  }
-
-  login = () => {
-    const win = auth.openLogin();
-    auth
-      .windowClosedPromise(win)
-      .then(async () => await this._componentDidMount());
-  };
-
-  async _componentDidMount() {
-    const isLoggedIn = await api.checkLogin();
-    this.setState({ isLoggedIn });
-  }
-
-  render() {
-    const { albums, isLoggedIn } = this.state;
-
-    if (!isLoggedIn) {
-      return <WelcomeScreen onLogin={this.login} />;
-    }
-
-    return (
+const App = ({ albums, isLoggedIn, onLogin, createPlaylist = () => {} }) => 
+  !isLoggedIn ? 
+      <WelcomeScreen onLogin={onLogin} /> :
       <Box p={10}>
-        <Form onSubmit={this.createPlaylist} />
+        <Form onSubmit={createPlaylist} />
         <Albums items={albums} />
       </Box>
-    );
-  }
-}
 
-export default App;
+export default compose(
+  withState('albums', 'updateAlbums', []),
+  withState('isLoggedIn', 'setLoggedIn', false),
+  withProps({
+    createPlaylist: async form => {
+      const albums = await api.createPlaylist(form);
+      this.props.updateAlbums(albums);
+    },
+    onLogin: () => {
+      auth.login()
+        .then(async () => await this.props.checkLogin());
+    },
+    checkLogin: async () => {
+      const isLoggedIn = await api.checkLogin();
+      this.props.setLoggedIn({ isLoggedIn });
+    }
+  }),
+  lifecycle({
+    componentDidMount() {
+      auth.redirected();
+      this.props.checkLogin();
+    }
+  })
+)(App);
