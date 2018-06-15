@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { space, width, fontSize, color, display } from 'styled-system'
 
 export const Button = styled.button`
+color: white;
 border: none;
 background: transparent;
 cursor: pointer;
@@ -15,7 +16,6 @@ export const Input = styled.input`
 `
 
 export const Tab = styled.div`
-  cursor: pointer;
   > ${Input}:checked + label {
     color: #1db954;
   }

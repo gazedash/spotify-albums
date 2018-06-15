@@ -84,8 +84,10 @@ export class Form extends React.Component {
           placeholder={artist ? artist + " Albums" : "Playlist name"}
           onChange={this.handleChange("playlistName")}
         />
-
+        <Text></Text>
+        <Box>
         <Button onClick={this.handleSubmit}>Save</Button>
+          </Box>
       </Box>
     );
   }

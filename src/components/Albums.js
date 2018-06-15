@@ -1,13 +1,15 @@
 import React from "react";
+import { Box, Text } from "./Styled";
 
 export const Albums = ({ items = [] }) => (
-  <div>
+  <Box>
+    {items.length && <Text color="#1db954">Success</Text>}
     {items.map(item => (
-        <div>
+        <Box>
             {JSON.stringify(item)}
-        </div>
+        </Box>
     ))}
-  </div>
+  </Box>
 );
 
 export default Albums;
