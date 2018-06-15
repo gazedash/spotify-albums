@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Box } from './components/Styled'; 
 import WelcomeScreen from "./components/WelcomeScreen";
 import Form from "./components/Form";
 import Albums from "./components/Albums";
@@ -42,10 +43,10 @@ class App extends Component {
     }
 
     return (
-      <div>
+      <Box p={10}>
         <Form onSubmit={this.createPlaylist} />
         <Albums items={albums} />
-      </div>
+      </Box>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
-import _ from "lodash";
+import { Button, Box, Text, Input, Label } from "./Styled";
+// import _ from "lodash";
 
 const sortTypes = ["new", "old", "popular"];
 const includeTitles = {
@@ -57,46 +58,46 @@ export class Form extends React.Component {
   render() {
     const { includes, sort, artist } = this.state.form;
     return (
-      <div>
-        <div>Spotify</div>
+      <Box>
+        <Text>Spotify</Text>
 
-        <input placeholder="Artist" onChange={this.handleChange("artist")} />
+        <Input placeholder="Artist" onChange={this.handleChange("artist")} />
 
-        <div>Sort</div>
+        <Text>Sort</Text>
 
         {sortTypes.map(type => (
-          <div key={type}>
-            <input
+          <Box key={type}>
+            <Input
               name="sort"
               type="radio"
               value={type}
               checked={type === sort}
               onChange={this.handleChange("sort")}
             />
-            <label>{type}</label>
-          </div>
+            <Label>{type}</Label>
+          </Box>
         ))}
 
-        <div>Include</div>
+        <Box>Include</Box>
 
         {Object.keys(includes).map(type => (
-          <div key={type}>
-            <input
+          <Box key={type}>
+            <Input
               type="checkbox"
               value={includes[type]}
               onChange={this.handleIncludeCheck(type)}
             />
-            <label>{includeTitles[type]}</label>
-          </div>
+            <Label>{includeTitles[type]}</Label>
+          </Box>
         ))}
 
-        <input
+        <Input
           placeholder={artist ? artist + " Albums" : "Playlist name"}
           onChange={this.handleChange("playlistName")}
         />
 
-        <button onClick={this.handleSubmit}>Save</button>
-      </div>
+        <Button onClick={this.handleSubmit}>Save</Button>
+      </Box>
     );
   }
 }

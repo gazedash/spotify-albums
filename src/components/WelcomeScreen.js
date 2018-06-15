@@ -1,10 +1,15 @@
 import React from "react";
+import { Button, Box, Text, SpotifyLogo } from "./Styled";
 
 export const WelcomeScreen = ({ onLogin }) => (
-  <div>
-    Hi, please log in
-    <button onClick={onLogin}>log in</button>
-  </div>
+  <Box p={10}>
+    <Text fontSize={16}>
+      Hi!
+      <br />
+      Please, log in
+    </Text>
+    <Button onClick={onLogin}>{SpotifyLogo}</Button>
+  </Box>
 );
 
 export default WelcomeScreen;
