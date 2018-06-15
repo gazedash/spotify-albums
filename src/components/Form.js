@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, Text, Input, Label } from "./Styled";
+import { Button, Box, Text, Input, Label, TabRadio } from "./Styled";
 // import _ from "lodash";
 
 const sortTypes = ["new", "old", "popular"];
@@ -59,7 +59,7 @@ export class Form extends React.Component {
     const { includes, sort, artist } = this.state.form;
     return (
       <Box>
-        <Text>Spotify</Text>
+    <Text fontSize={16} color={"#1db954"}>Spotify</Text>
 
         <Input placeholder="Artist" onChange={this.handleChange("artist")} />
 
@@ -67,29 +67,18 @@ export class Form extends React.Component {
 
         {sortTypes.map(type => (
           <Box key={type}>
-            <Input
+            <TabRadio
+              id={type}
               name="sort"
-              type="radio"
               value={type}
+              label={type}
               checked={type === sort}
               onChange={this.handleChange("sort")}
             />
-            <Label>{type}</Label>
           </Box>
         ))}
 
-        <Box>Include</Box>
-
-        {Object.keys(includes).map(type => (
-          <Box key={type}>
-            <Input
-              type="checkbox"
-              value={includes[type]}
-              onChange={this.handleIncludeCheck(type)}
-            />
-            <Label>{includeTitles[type]}</Label>
-          </Box>
-        ))}
+        <Text></Text>
 
         <Input
           placeholder={artist ? artist + " Albums" : "Playlist name"}
