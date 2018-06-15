@@ -6,7 +6,7 @@ export const Albums = ({ items = [] }) => (
     {items.length && <Text color="#1db954">Success</Text>}
     {items.map(item => (
         <Box>
-            {JSON.stringify(item)}
+            {/* {JSON.stringify(item)} */}
         </Box>
     ))}
   </Box>

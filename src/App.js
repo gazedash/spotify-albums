@@ -25,7 +25,7 @@ export default compose(
     },
     checkLogin: props => async () => {
       const isLoggedIn = await api.checkLogin();
-      props.setLoggedIn({ isLoggedIn });
+      props.setLoggedIn(isLoggedIn);
     }
   }),
   withHandlers({
