@@ -74,6 +74,7 @@ export default {
   getAccessToken,
   openLogin,
   getLoginURL,
+  login,
   redirected,
   windowClosedPromise
 };
