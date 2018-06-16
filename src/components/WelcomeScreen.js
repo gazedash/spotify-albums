@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Box, Text, SpotifyLogo } from "./Styled";
 
 export const WelcomeScreen = ({ onLogin }) => (
-  <Box py={10} px={40}>
+  <Box>
     <Text fontSize={16} color={"#1db954"}>
       Hi!
       <br />
