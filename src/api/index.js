@@ -7,7 +7,10 @@ const ENDPOINT = "https://api.spotify.com";
 const VERSION = "v1";
 const BASE_URL = `${ENDPOINT}/${VERSION}/`;
 
-// SECRET, headers: arrow functions to make sure value is updated
+/**
+ * SECRET, headers: arrow function to make sure value is updated
+ * @returns {string}
+ */
 const SECRET = () => {
   return localStorage.getItem("token") || "";
 };
@@ -51,7 +54,9 @@ export function buildUrl(method: ?string, args?: Object): string {
 export const fetchArtist = async (query: ?string, args?: {}): Object =>
   fetchJson(`search`, { query, type: "artist", ...args });
 
-// spotify artist id
+/**
+ * @param{string?} id - spotify artist id
+ */
 export const fetchArtistAlbumsList = async (id: ?string, args?: {}): Object =>
   id ? fetchJson(`artists/${id}/albums`, { limit: 50, ...args }) : () => {};
 
@@ -107,7 +112,7 @@ export const fetchSongs = async (artist, args = {}) => {
         )
       )
     );
-    console.log(albums);
+    // console.log(albums);
 
     // albums = args.includes.live
     //   ? albums
@@ -122,6 +127,7 @@ export const fetchSongs = async (artist, args = {}) => {
       sort === "popular"
         ? albums
         : R.sort(order(R.prop("release_date")))(albums);
+        // console.log(sortedAlbums)
     const tracksByAlbums = sortedAlbums.map(
       // ({
       //   name,
@@ -132,7 +138,7 @@ export const fetchSongs = async (artist, args = {}) => {
     );
 
     // const res = await Promise.all(tracksByAlbums);
-    console.log(sortedAlbums);
+    // console.log(sortedAlbums);
 
     return R.unnest(tracksByAlbums);
   }
@@ -140,7 +146,7 @@ export const fetchSongs = async (artist, args = {}) => {
 };
 
 export const createPlaylist = async form => {
-  console.log(form);
+  // console.log(form);
   const songs = await fetchSongs(form.artist, form);
   const { id: user_id } = await fetchJson("me");
   // console.log(user);
@@ -149,11 +155,11 @@ export const createPlaylist = async form => {
     name: form.playlistName
   });
   const urisS = _.chunk(songs.map(song => song.uri), 100);
-  console.log(urisS);
+  // console.log(urisS);
   const promises = urisS.map(uris =>
     addSongsToPlaylist(user_id, playlist_id, { uris })
   );
   const res = await Promise.all(promises);
-  console.log(res);
+  // console.log(res);
   return res;
 };
