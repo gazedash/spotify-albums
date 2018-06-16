@@ -65,8 +65,8 @@ export function redirected() {
 }
 
 export async function login() {
-  const win = openLogin()
-  return windowClosedPromise(win)
+  const win = openLogin();
+  return windowClosedPromise(win);
 }
 
 export default {

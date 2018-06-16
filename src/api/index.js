@@ -127,7 +127,7 @@ export const fetchSongs = async (artist, args = {}) => {
       sort === "popular"
         ? albums
         : R.sort(order(R.prop("release_date")))(albums);
-        // console.log(sortedAlbums)
+    // console.log(sortedAlbums)
     const tracksByAlbums = sortedAlbums.map(
       // ({
       //   name,

@@ -59,7 +59,9 @@ export class Form extends React.Component {
     const { includes, sort, artist } = this.state.form;
     return (
       <Box>
-    <Text fontSize={16} color={"#1db954"}>Spotify</Text>
+        <Text fontSize={16} color={"#1db954"}>
+          Spotify
+        </Text>
 
         <Input placeholder="Artist" onChange={this.handleChange("artist")} />
 
@@ -78,16 +80,16 @@ export class Form extends React.Component {
           </Box>
         ))}
 
-        <Text></Text>
+        <Text />
 
         <Input
           placeholder={artist ? artist + " Albums" : "Playlist name"}
           onChange={this.handleChange("playlistName")}
         />
-        <Text></Text>
+        <Text />
         <Box>
-        <Button onClick={this.handleSubmit}>Save</Button>
-          </Box>
+          <Button onClick={this.handleSubmit}>Save</Button>
+        </Box>
       </Box>
     );
   }
