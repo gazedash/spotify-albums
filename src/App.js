@@ -5,7 +5,14 @@ import Form from "./components/Form";
 import Albums from "./components/Albums";
 import * as api from "./api";
 import auth from "./api/auth";
-import { withState, lifecycle, compose, withHandlers } from "recompose";
+import {
+  withState,
+  lifecycle,
+  compose,
+  withHandlers,
+  branch,
+  renderComponent
+} from "recompose";
 
 const wrapWith = WrapperComponent => BaseComponent => (
   children,
@@ -32,15 +39,12 @@ const AppWrap = props => (
   </Box>
 );
 
-const App = ({ albums, isLoggedIn, onLogin, createPlaylist = () => {} }) =>
-  !isLoggedIn ? (
-    <WelcomeScreen onLogin={onLogin} />
-  ) : (
-    <Box>
-      <Form onSubmit={createPlaylist} />
-      <Albums items={albums} />
-    </Box>
-  );
+const LoggedInApp = ({ createPlaylist, albums }) => (
+  <Box>
+    <Form onSubmit={createPlaylist} />
+    <Albums items={albums} />
+  </Box>
+);
 
 export default compose(
   wrapWith(AppWrap),
@@ -68,5 +72,10 @@ export default compose(
       auth.redirected();
       this.props.checkLogin();
     }
-  })
-)(App);
+  }),
+  branch(
+    ({ isLoggedIn }) => isLoggedIn,
+    renderComponent(LoggedInApp),
+    renderComponent(WelcomeScreen)
+  )
+)();
