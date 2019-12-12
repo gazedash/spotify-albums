@@ -1,9 +1,2 @@
-workflow "New workflow" {
-  on = "push"
-  resolves = ["ESLint"]
-}
-
-action "ESLint" {
-  uses = "stefanoeb/eslint-action@master"
-  args = "index.js src/**.js"
-}
+- name: Run ESLint
+  uses: stefanoeb/eslint-action@1.0.0
